@@ -1,0 +1,65 @@
+﻿<Window x:Class="WeSplitApp.chartsMoney"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeSplitApp"
+        mc:Ignorable="d"
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+		TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="PieChart" Height="700" Width="1024"
+		Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="Assets/iconfinish.png" Width="45" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"></Image>
+                <TextBlock x:Name="TripName" TextAlignment="Left" FontSize="30" FontWeight="Bold"
+                           Padding="5,10,10,10" Foreground="Blue" Width="800"></TextBlock>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <WrapPanel HorizontalAlignment="Right" Margin="0,0,10,0">
+                <Image Name="imgBack" Source="Assets/back-button.png" MouseUp="imgBack_MouseUp" Width="40" RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" Height="40" Margin="0 10 15 0"></Image>
+            </WrapPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="0">
+            <TextBlock Margin="10" Text="Biều đồ số tiền đóng của mỗi thành viên"
+                       FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"
+                       FontWeight="Bold" Foreground="Blue"></TextBlock>
+        </Grid>
+        <Grid Grid.Column="0" Grid.Row="2">
+            <lvc:PieChart LegendLocation="Bottom" Series="{Binding Data1}" 
+                       DataClick="PieChart_DataClick" VerticalAlignment="Center" Height="460">
+            </lvc:PieChart>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <TextBlock Margin="10" Text="Biều đồ khoản chi tiêu"
+                       FontSize="24" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" FontWeight="Bold" Foreground="Blue"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <lvc:PieChart LegendLocation="Bottom" Height="460"
+                      DataClick="PieChart_DataClick" VerticalAlignment="Center"
+                      Series="{Binding Data2}">
+            </lvc:PieChart>
+        </Grid>
+
+    </Grid>
+</Window>
