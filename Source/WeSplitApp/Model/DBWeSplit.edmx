@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBWeSplitModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChuyenDi">
+          <Key>
+            <PropertyRef Name="IDChuyenDi" />
+          </Key>
+          <Property Name="IDChuyenDi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenChuyenDi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NgayBatDau" Type="datetime" Nullable="false" />
+          <Property Name="NgayKetThuc" Type="datetime" Nullable="false" />
+          <Property Name="GioiThieu" Type="ntext" />
+          <Property Name="LoTrinh" Type="ntext" />
+          <Property Name="HinhAnh" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="HinhAnhChuyenDi">
+          <Key>
+            <PropertyRef Name="IDHinhAnh" />
+          </Key>
+          <Property Name="IDHinhAnh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDChuyenDi" Type="int" Nullable="false" />
+          <Property Name="HinhAnh" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KhoanChiTieu">
+          <Key>
+            <PropertyRef Name="IDKhoanChi" />
+          </Key>
+          <Property Name="IDKhoanChi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDChuyenDi" Type="int" Nullable="false" />
+          <Property Name="TenKhoanChi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SoTien" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KhoanThu">
+          <Key>
+            <PropertyRef Name="IDChuyenDi" />
+            <PropertyRef Name="IDNguoiDongTien" />
+          </Key>
+          <Property Name="IDChuyenDi" Type="int" Nullable="false" />
+          <Property Name="IDNguoiDongTien" Type="int" Nullable="false" />
+          <Property Name="SoTien" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ThamGiaChuyenDi">
+          <Key>
+            <PropertyRef Name="IDChuyenDi" />
+            <PropertyRef Name="IDThanhVien" />
+          </Key>
+          <Property Name="IDChuyenDi" Type="int" Nullable="false" />
+          <Property Name="IDThanhVien" Type="int" Nullable="false" />
+          <Property Name="VaiTro" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ThanhVien">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenThanhVien" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_HinhAnhChuyenDi_ChuyenDi">
+          <End Role="ChuyenDi" Type="Self.ChuyenDi" Multiplicity="1" />
+          <End Role="HinhAnhChuyenDi" Type="Self.HinhAnhChuyenDi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Principal>
+            <Dependent Role="HinhAnhChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KhoanChiTieu_ChuyenDi">
+          <End Role="ChuyenDi" Type="Self.ChuyenDi" Multiplicity="1" />
+          <End Role="KhoanChiTieu" Type="Self.KhoanChiTieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Principal>
+            <Dependent Role="KhoanChiTieu">
+              <PropertyRef Name="IDChuyenDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KhoanThu_ChuyenDi">
+          <End Role="ChuyenDi" Type="Self.ChuyenDi" Multiplicity="1" />
+          <End Role="KhoanThu" Type="Self.KhoanThu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Principal>
+            <Dependent Role="KhoanThu">
+              <PropertyRef Name="IDChuyenDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KhoanThu_ThanhVien">
+          <End Role="ThanhVien" Type="Self.ThanhVien" Multiplicity="1" />
+          <End Role="KhoanThu" Type="Self.KhoanThu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThanhVien">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="KhoanThu">
+              <PropertyRef Name="IDNguoiDongTien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThamGiaChuyenDi_ChuyenDi">
+          <End Role="ChuyenDi" Type="Self.ChuyenDi" Multiplicity="1" />
+          <End Role="ThamGiaChuyenDi" Type="Self.ThamGiaChuyenDi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Principal>
+            <Dependent Role="ThamGiaChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThamGiaChuyenDi_ThanhVien">
+          <End Role="ThanhVien" Type="Self.ThanhVien" Multiplicity="1" />
+          <End Role="ThamGiaChuyenDi" Type="Self.ThamGiaChuyenDi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThanhVien">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ThamGiaChuyenDi">
+              <PropertyRef Name="IDThanhVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBWeSplitModelStoreContainer">
+          <EntitySet Name="ChuyenDi" EntityType="Self.ChuyenDi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HinhAnhChuyenDi" EntityType="Self.HinhAnhChuyenDi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KhoanChiTieu" EntityType="Self.KhoanChiTieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KhoanThu" EntityType="Self.KhoanThu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThamGiaChuyenDi" EntityType="Self.ThamGiaChuyenDi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThanhVien" EntityType="Self.ThanhVien" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_HinhAnhChuyenDi_ChuyenDi" Association="Self.FK_HinhAnhChuyenDi_ChuyenDi">
+            <End Role="ChuyenDi" EntitySet="ChuyenDi" />
+            <End Role="HinhAnhChuyenDi" EntitySet="HinhAnhChuyenDi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KhoanChiTieu_ChuyenDi" Association="Self.FK_KhoanChiTieu_ChuyenDi">
+            <End Role="ChuyenDi" EntitySet="ChuyenDi" />
+            <End Role="KhoanChiTieu" EntitySet="KhoanChiTieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KhoanThu_ChuyenDi" Association="Self.FK_KhoanThu_ChuyenDi">
+            <End Role="ChuyenDi" EntitySet="ChuyenDi" />
+            <End Role="KhoanThu" EntitySet="KhoanThu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KhoanThu_ThanhVien" Association="Self.FK_KhoanThu_ThanhVien">
+            <End Role="ThanhVien" EntitySet="ThanhVien" />
+            <End Role="KhoanThu" EntitySet="KhoanThu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThamGiaChuyenDi_ChuyenDi" Association="Self.FK_ThamGiaChuyenDi_ChuyenDi">
+            <End Role="ChuyenDi" EntitySet="ChuyenDi" />
+            <End Role="ThamGiaChuyenDi" EntitySet="ThamGiaChuyenDi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThamGiaChuyenDi_ThanhVien" Association="Self.FK_ThamGiaChuyenDi_ThanhVien">
+            <End Role="ThanhVien" EntitySet="ThanhVien" />
+            <End Role="ThamGiaChuyenDi" EntitySet="ThamGiaChuyenDi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBWeSplitModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ChuyenDi">
+          <Key>
+            <PropertyRef Name="IDChuyenDi" />
+          </Key>
+          <Property Name="IDChuyenDi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenChuyenDi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NgayBatDau" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NgayKetThuc" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GioiThieu" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LoTrinh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HinhAnhChuyenDis" Relationship="Self.FK_HinhAnhChuyenDi_ChuyenDi" FromRole="ChuyenDi" ToRole="HinhAnhChuyenDi" />
+          <NavigationProperty Name="KhoanChiTieux" Relationship="Self.FK_KhoanChiTieu_ChuyenDi" FromRole="ChuyenDi" ToRole="KhoanChiTieu" />
+          <NavigationProperty Name="KhoanThus" Relationship="Self.FK_KhoanThu_ChuyenDi" FromRole="ChuyenDi" ToRole="KhoanThu" />
+          <NavigationProperty Name="ThamGiaChuyenDis" Relationship="Self.FK_ThamGiaChuyenDi_ChuyenDi" FromRole="ChuyenDi" ToRole="ThamGiaChuyenDi" />
+        </EntityType>
+        <EntityType Name="HinhAnhChuyenDi">
+          <Key>
+            <PropertyRef Name="IDHinhAnh" />
+          </Key>
+          <Property Name="IDHinhAnh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDChuyenDi" Type="Int32" Nullable="false" />
+          <Property Name="HinhAnh" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ChuyenDi" Relationship="Self.FK_HinhAnhChuyenDi_ChuyenDi" FromRole="HinhAnhChuyenDi" ToRole="ChuyenDi" />
+        </EntityType>
+        <EntityType Name="KhoanChiTieu">
+          <Key>
+            <PropertyRef Name="IDKhoanChi" />
+          </Key>
+          <Property Name="IDKhoanChi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDChuyenDi" Type="Int32" Nullable="false" />
+          <Property Name="TenKhoanChi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SoTien" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="ChuyenDi" Relationship="Self.FK_KhoanChiTieu_ChuyenDi" FromRole="KhoanChiTieu" ToRole="ChuyenDi" />
+        </EntityType>
+        <EntityType Name="KhoanThu">
+          <Key>
+            <PropertyRef Name="IDChuyenDi" />
+            <PropertyRef Name="IDNguoiDongTien" />
+          </Key>
+          <Property Name="IDChuyenDi" Type="Int32" Nullable="false" />
+          <Property Name="IDNguoiDongTien" Type="Int32" Nullable="false" />
+          <Property Name="SoTien" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="ChuyenDi" Relationship="Self.FK_KhoanThu_ChuyenDi" FromRole="KhoanThu" ToRole="ChuyenDi" />
+          <NavigationProperty Name="ThanhVien" Relationship="Self.FK_KhoanThu_ThanhVien" FromRole="KhoanThu" ToRole="ThanhVien" />
+        </EntityType>
+        <EntityType Name="ThamGiaChuyenDi">
+          <Key>
+            <PropertyRef Name="IDChuyenDi" />
+            <PropertyRef Name="IDThanhVien" />
+          </Key>
+          <Property Name="IDChuyenDi" Type="Int32" Nullable="false" />
+          <Property Name="IDThanhVien" Type="Int32" Nullable="false" />
+          <Property Name="VaiTro" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ChuyenDi" Relationship="Self.FK_ThamGiaChuyenDi_ChuyenDi" FromRole="ThamGiaChuyenDi" ToRole="ChuyenDi" />
+          <NavigationProperty Name="ThanhVien" Relationship="Self.FK_ThamGiaChuyenDi_ThanhVien" FromRole="ThamGiaChuyenDi" ToRole="ThanhVien" />
+        </EntityType>
+        <EntityType Name="ThanhVien">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenThanhVien" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="KhoanThus" Relationship="Self.FK_KhoanThu_ThanhVien" FromRole="ThanhVien" ToRole="KhoanThu" />
+          <NavigationProperty Name="ThamGiaChuyenDis" Relationship="Self.FK_ThamGiaChuyenDi_ThanhVien" FromRole="ThanhVien" ToRole="ThamGiaChuyenDi" />
+        </EntityType>
+        <Association Name="FK_HinhAnhChuyenDi_ChuyenDi">
+          <End Role="ChuyenDi" Type="Self.ChuyenDi" Multiplicity="1" />
+          <End Role="HinhAnhChuyenDi" Type="Self.HinhAnhChuyenDi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Principal>
+            <Dependent Role="HinhAnhChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KhoanChiTieu_ChuyenDi">
+          <End Role="ChuyenDi" Type="Self.ChuyenDi" Multiplicity="1" />
+          <End Role="KhoanChiTieu" Type="Self.KhoanChiTieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Principal>
+            <Dependent Role="KhoanChiTieu">
+              <PropertyRef Name="IDChuyenDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KhoanThu_ChuyenDi">
+          <End Role="ChuyenDi" Type="Self.ChuyenDi" Multiplicity="1" />
+          <End Role="KhoanThu" Type="Self.KhoanThu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Principal>
+            <Dependent Role="KhoanThu">
+              <PropertyRef Name="IDChuyenDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThamGiaChuyenDi_ChuyenDi">
+          <End Role="ChuyenDi" Type="Self.ChuyenDi" Multiplicity="1" />
+          <End Role="ThamGiaChuyenDi" Type="Self.ThamGiaChuyenDi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Principal>
+            <Dependent Role="ThamGiaChuyenDi">
+              <PropertyRef Name="IDChuyenDi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KhoanThu_ThanhVien">
+          <End Role="ThanhVien" Type="Self.ThanhVien" Multiplicity="1" />
+          <End Role="KhoanThu" Type="Self.KhoanThu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThanhVien">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="KhoanThu">
+              <PropertyRef Name="IDNguoiDongTien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ThamGiaChuyenDi_ThanhVien">
+          <End Role="ThanhVien" Type="Self.ThanhVien" Multiplicity="1" />
+          <End Role="ThamGiaChuyenDi" Type="Self.ThamGiaChuyenDi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThanhVien">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ThamGiaChuyenDi">
+              <PropertyRef Name="IDThanhVien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBWeSplitEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChuyenDis" EntityType="Self.ChuyenDi" />
+          <EntitySet Name="HinhAnhChuyenDis" EntityType="Self.HinhAnhChuyenDi" />
+          <EntitySet Name="KhoanChiTieux" EntityType="Self.KhoanChiTieu" />
+          <EntitySet Name="KhoanThus" EntityType="Self.KhoanThu" />
+          <EntitySet Name="ThamGiaChuyenDis" EntityType="Self.ThamGiaChuyenDi" />
+          <EntitySet Name="ThanhViens" EntityType="Self.ThanhVien" />
+          <AssociationSet Name="FK_HinhAnhChuyenDi_ChuyenDi" Association="Self.FK_HinhAnhChuyenDi_ChuyenDi">
+            <End Role="ChuyenDi" EntitySet="ChuyenDis" />
+            <End Role="HinhAnhChuyenDi" EntitySet="HinhAnhChuyenDis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KhoanChiTieu_ChuyenDi" Association="Self.FK_KhoanChiTieu_ChuyenDi">
+            <End Role="ChuyenDi" EntitySet="ChuyenDis" />
+            <End Role="KhoanChiTieu" EntitySet="KhoanChiTieux" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KhoanThu_ChuyenDi" Association="Self.FK_KhoanThu_ChuyenDi">
+            <End Role="ChuyenDi" EntitySet="ChuyenDis" />
+            <End Role="KhoanThu" EntitySet="KhoanThus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThamGiaChuyenDi_ChuyenDi" Association="Self.FK_ThamGiaChuyenDi_ChuyenDi">
+            <End Role="ChuyenDi" EntitySet="ChuyenDis" />
+            <End Role="ThamGiaChuyenDi" EntitySet="ThamGiaChuyenDis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KhoanThu_ThanhVien" Association="Self.FK_KhoanThu_ThanhVien">
+            <End Role="ThanhVien" EntitySet="ThanhViens" />
+            <End Role="KhoanThu" EntitySet="KhoanThus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ThamGiaChuyenDi_ThanhVien" Association="Self.FK_ThamGiaChuyenDi_ThanhVien">
+            <End Role="ThanhVien" EntitySet="ThanhViens" />
+            <End Role="ThamGiaChuyenDi" EntitySet="ThamGiaChuyenDis" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBWeSplitModelStoreContainer" CdmEntityContainer="DBWeSplitEntities">
+          <EntitySetMapping Name="ChuyenDis">
+            <EntityTypeMapping TypeName="DBWeSplitModel.ChuyenDi">
+              <MappingFragment StoreEntitySet="ChuyenDi">
+                <ScalarProperty Name="IDChuyenDi" ColumnName="IDChuyenDi" />
+                <ScalarProperty Name="TenChuyenDi" ColumnName="TenChuyenDi" />
+                <ScalarProperty Name="NgayBatDau" ColumnName="NgayBatDau" />
+                <ScalarProperty Name="NgayKetThuc" ColumnName="NgayKetThuc" />
+                <ScalarProperty Name="GioiThieu" ColumnName="GioiThieu" />
+                <ScalarProperty Name="LoTrinh" ColumnName="LoTrinh" />
+                <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HinhAnhChuyenDis">
+            <EntityTypeMapping TypeName="DBWeSplitModel.HinhAnhChuyenDi">
+              <MappingFragment StoreEntitySet="HinhAnhChuyenDi">
+                <ScalarProperty Name="IDHinhAnh" ColumnName="IDHinhAnh" />
+                <ScalarProperty Name="IDChuyenDi" ColumnName="IDChuyenDi" />
+                <ScalarProperty Name="HinhAnh" ColumnName="HinhAnh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KhoanChiTieux">
+            <EntityTypeMapping TypeName="DBWeSplitModel.KhoanChiTieu">
+              <MappingFragment StoreEntitySet="KhoanChiTieu">
+                <ScalarProperty Name="IDKhoanChi" ColumnName="IDKhoanChi" />
+                <ScalarProperty Name="IDChuyenDi" ColumnName="IDChuyenDi" />
+                <ScalarProperty Name="TenKhoanChi" ColumnName="TenKhoanChi" />
+                <ScalarProperty Name="SoTien" ColumnName="SoTien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KhoanThus">
+            <EntityTypeMapping TypeName="DBWeSplitModel.KhoanThu">
+              <MappingFragment StoreEntitySet="KhoanThu">
+                <ScalarProperty Name="IDChuyenDi" ColumnName="IDChuyenDi" />
+                <ScalarProperty Name="IDNguoiDongTien" ColumnName="IDNguoiDongTien" />
+                <ScalarProperty Name="SoTien" ColumnName="SoTien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThamGiaChuyenDis">
+            <EntityTypeMapping TypeName="DBWeSplitModel.ThamGiaChuyenDi">
+              <MappingFragment StoreEntitySet="ThamGiaChuyenDi">
+                <ScalarProperty Name="IDChuyenDi" ColumnName="IDChuyenDi" />
+                <ScalarProperty Name="IDThanhVien" ColumnName="IDThanhVien" />
+                <ScalarProperty Name="VaiTro" ColumnName="VaiTro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThanhViens">
+            <EntityTypeMapping TypeName="DBWeSplitModel.ThanhVien">
+              <MappingFragment StoreEntitySet="ThanhVien">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TenThanhVien" ColumnName="TenThanhVien" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

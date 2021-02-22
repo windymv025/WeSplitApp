@@ -1,0 +1,112 @@
+﻿<Window x:Class="WeSplitApp.SplitMoney"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeSplitApp"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"  
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="SplitMoney" Height="700" Width="1024"
+        WindowStartupLocation="CenterScreen">
+    <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect ExpandIn, Duration=0:0:0}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Image Name="imgBack" Source="Assets/back-button.png" MouseUp="imgBack_MouseUp" Width="46" RenderOptions.BitmapScalingMode="HighQuality" Stretch="Fill" Height="46" Margin="20,0,20,0"
+                   VerticalAlignment="Center" HorizontalAlignment="Left"></Image>
+            <Label Content="SPLIT MONEY" VerticalAlignment="Center" FontWeight="ExtraBold"
+                   FontSize="35" Foreground="Blue" Margin="20,0,0,0" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Name="Title" Text="{Binding TenChuyenDi}" TextAlignment="Left" FontSize="26" Foreground="Blue" Margin="20,0,0,0"></TextBlock>
+            <ScrollViewer Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" CornerRadius="15" Padding="10" BorderThickness="2" BorderBrush="Blue" Margin="20">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                            <TextBlock Text="CÁC KHOẢN CHI" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Blue" FontSize="20" Margin="0,5,0,5"/>
+
+                            <ListView x:Name="listViewKhoanChi" SelectionChanged="listViewKhoanChi_SelectionChanged">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="auto">
+                                            <GridViewColumn.Header>Khoản chi</GridViewColumn.Header>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding TenKhoanChi}" FontSize="16" TextAlignment="Justify" Width="auto"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="auto">
+                                            <GridViewColumn.Header>Giá tiền</GridViewColumn.Header>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding SoTien}" FontSize="16" TextAlignment="Justify" Width="auto" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="auto">
+                                            <GridViewColumn.Header>Loại tiền tệ</GridViewColumn.Header>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap"  Width="auto" Text="VND" FontSize="16" TextAlignment="Justify" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1" CornerRadius="15" Padding="10" BorderThickness="2" BorderBrush="Blue" Margin="20">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                            <TextBlock Text="CHIA TIỀN" HorizontalAlignment="Center" FontWeight="Bold" Foreground="Blue" FontSize="20" Margin="0,5,0,5"/>
+
+                            <ListView x:Name="listViewChiaTien" SelectionChanged="listViewKhoanChi_SelectionChanged">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="auto">
+                                            <GridViewColumn.Header>Tên thành viên</GridViewColumn.Header>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding TenThanhVien}" FontSize="16" TextAlignment="Justify" Width="auto"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="auto">
+                                            <GridViewColumn.Header>Tiền đóng</GridViewColumn.Header>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding SoTienThu}" FontSize="16" TextAlignment="Right" Width="auto" />
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="auto">
+                                            <GridViewColumn.Header>Ghi chú</GridViewColumn.Header>
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock TextWrapping="Wrap"  Width="auto" Text="{Binding Result}" FontSize="16" TextAlignment="Center"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </materialDesign:TransitioningContent>
+</Window>
